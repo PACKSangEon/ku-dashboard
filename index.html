@@ -1,4 +1,5 @@
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2026-2 학기 상황판</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap">
@@ -20,29 +21,29 @@
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --paper:#141112; --surface:#1c1819; --surface-2:#241f20; --sunk:#100d0e;
-    --ink:#ece7e6; --ink-2:#b6abaa; --ink-3:#8b7f80;
-    --line:#302a2b; --line-2:#433a3c;
-    --accent:#d4657a; --accent-ink:#e08196; --accent-soft:#3a222a;
-    --soon:#cba552; --soon-soft:#332a17;
-    --calm:#93a7b6; --calm-soft:#1f272d;
-    --done:#71a486;
-    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 24px -14px rgba(0,0,0,.7);
-    --c-bd:#6fbfae; --c-algo:#d6a95e; --c-net:#a795d8;
-    --c-llm:#e08575; --c-la:#79b3dd; --c-self:#9dc06a; --c-body:#c79c78;
+    --paper:#0d0d0d; --surface:#181818; --surface-2:#212121; --sunk:#080808;
+    --ink:#f0ecec; --ink-2:#a09494; --ink-3:#6a5e5e;
+    --line:#2e2020; --line-2:#3e2c2c;
+    --accent:#e03040; --accent-ink:#ff5060; --accent-soft:#2a080e;
+    --soon:#d4883a; --soon-soft:#2a1808;
+    --calm:#7a9cb8; --calm-soft:#0f1e2a;
+    --done:#5fa876;
+    --shadow:0 1px 2px rgba(0,0,0,.6), 0 10px 24px -14px rgba(0,0,0,.85);
+    --c-bd:#5bbfaa; --c-algo:#d6a040; --c-net:#a080d8;
+    --c-llm:#e06060; --c-la:#60a8d8; --c-self:#80b840; --c-body:#c08060;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#141112; --surface:#1c1819; --surface-2:#241f20; --sunk:#100d0e;
-  --ink:#ece7e6; --ink-2:#b6abaa; --ink-3:#8b7f80;
-  --line:#302a2b; --line-2:#433a3c;
-  --accent:#d4657a; --accent-ink:#e08196; --accent-soft:#3a222a;
-  --soon:#cba552; --soon-soft:#332a17;
-  --calm:#93a7b6; --calm-soft:#1f272d;
-  --done:#71a486;
-  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 24px -14px rgba(0,0,0,.7);
-  --c-bd:#6fbfae; --c-algo:#d6a95e; --c-net:#a795d8;
-  --c-llm:#e08575; --c-la:#79b3dd; --c-self:#9dc06a; --c-body:#c79c78;
+  --paper:#0d0d0d; --surface:#181818; --surface-2:#212121; --sunk:#080808;
+  --ink:#f0ecec; --ink-2:#a09494; --ink-3:#6a5e5e;
+  --line:#2e2020; --line-2:#3e2c2c;
+  --accent:#e03040; --accent-ink:#ff5060; --accent-soft:#2a080e;
+  --soon:#d4883a; --soon-soft:#2a1808;
+  --calm:#7a9cb8; --calm-soft:#0f1e2a;
+  --done:#5fa876;
+  --shadow:0 1px 2px rgba(0,0,0,.6), 0 10px 24px -14px rgba(0,0,0,.85);
+  --c-bd:#5bbfaa; --c-algo:#d6a040; --c-net:#a080d8;
+  --c-llm:#e06060; --c-la:#60a8d8; --c-self:#80b840; --c-body:#c08060;
 }
 *{box-sizing:border-box}
 body{
@@ -421,6 +422,16 @@ a.tlink:hover .ext{background:var(--accent);color:#fff}
 .matlink.local{border-style:dashed;cursor:default}
 .matlink.local:hover{background:none;border-color:var(--line-2);color:var(--ink-2)}
 
+/* 공지 목록 */
+.noticelist{display:flex;flex-direction:column;gap:5px;margin-top:10px}
+.nitem{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:0 10px;padding:8px 12px;border:1px solid var(--line);border-radius:3px;text-decoration:none;color:inherit}
+.nitem:hover{border-color:var(--accent);background:var(--accent-soft)}
+.nitem .ncrs{font-family:var(--ff-mono);font-size:10px;font-weight:700;padding:2px 6px;border-radius:2px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.nitem .ndate{font-family:var(--ff-mono);font-size:11px;color:var(--ink-3);white-space:nowrap}
+.nitem .ntitle{font-size:13px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nitem:hover .ntitle{color:var(--accent-ink)}
+.notice-empty{font-size:13px;color:var(--ink-3);margin-top:10px}
+
 /* 프로젝트 목표 패널 */
 .goal{margin-top:44px;background:var(--sunk);border:1px solid var(--line);padding:22px 24px 24px}
 .goal .gtop{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start}
@@ -553,34 +564,25 @@ var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
 /* ===== 과목 ===== */
 var C={
   bd:{n:'빅데이터분산처리시스템',s:'빅데이터',code:'DCSS410-00',prof:'강신후',
-      time:'화 9:00–10:30 · 수 11:00–12:30 과기2관 315호',book:'강의 저장소(GitHub) 실습 자료',
+      time:'수 11:00–11:50 · 대면',book:'강의 저장소(GitHub) 실습 자료',
       note:'과제 12개는 각 1주 기한이고 <b>지각 제출은 예외 없이 0점</b>이다.'},
-  algo:{n:'알고리즘 (영강)',s:'알고리즘',code:'DCCS309-00',prof:'Cho',
-      time:'목 13:00–14:30 · 금 9:00–10:30 과기2관 310호',
-      book:'Introduction to Algorithms (4th ed.) — Cormen et al.',
-      note:'중간고사 30% · 기말고사 30% · 그룹프로젝트 30% · 태도 10%. <b>영어 수업.</b>'},
-  net:{n:'컴퓨터네트워크 (영강)',s:'컴퓨터네트워크',code:'DCSS307-01',prof:'이용기',
-      time:'월 16:00–17:30 · 화 13:00–14:30 과기2관 310호',
-      book:'Computer Networking: A Top-Down Approach (9th ed.)',
-      note:'Flipped Class + 영어 수업. 팀 프로젝트 마감 <b>2026-12-11</b>.'},
-  llm:{n:'거대언어모델과챗GPT',s:'거대언어모델',code:'DCCS330-00',prof:'조민호',
-      time:'월 10:00–11:50 · 목 10:00–11:50 과기2관 324호',
-      book:'교수 PPT · NLP with Transformers (O\'Reilly)',
+  algo:{n:'알고리즘 (영강)',s:'알고리즘',code:'DCSS302-00',prof:'—',
+      time:'—',book:'—',note:''},
+  net:{n:'컴퓨터네트워크 (영강)',s:'컴퓨터네트워크',code:'DCSS321-01',prof:'—',
+      time:'—',book:'—',note:''},
+  llm:{n:'거대언어모델과챗GPT',s:'거대언어모델',code:'DCSS330-00',prof:'조민호',
+      time:'SEMO(플립러닝) — 사전학습 영상 + 대면 심화',book:'교수 PPT · NLP with Transformers (O'Reilly)',
       note:'<b>중간·기말고사가 없다.</b> 대신 퀴즈 60% — 챕터가 끝날 때마다 열리고 마감되면 닫힌다.'},
-  la:{n:'전산선형대수학',s:'전산선형대수',code:'DCCS321-00',prof:'조현중',
-      time:'월 14:00–15:30 · 목 17:00–18:30 과기2관 310호',
-      book:'인공지능 시대의 선형대수학 (김대수 2022) · Strang 4th Ed.',
-      note:'숙제+중간고사+기말고사로 평가. 전공필수. 연락처: 과기2관 329B호'},
-  self:{n:'자기이해와학습전략',s:'자기이해',code:'SPGS345-01',prof:'김진선',
-      time:'화 16:00–17:30 문화스포츠관 308호',book:'—',
-      note:'P/F 평가. 출석·중간·기말·참여도. 1학점.'},
-  body:{n:'보디빌딩',s:'보디빌딩',code:'GLOS111-03',prof:'서현',
-      time:'화 14:00–15:30 체육관 101호',book:'NSCA 퍼스널 트레이닝의 정수',
-      note:'기말시험 20% · 참여도 80%. 1학점. 아이파크 헬스 이용료 발생 예정.'}
+  la:{n:'전산선형대수학',s:'전산선형대수',code:'DCSS200-00',prof:'—',
+      time:'—',book:'—',note:''},
+  self:{n:'자기이해와학습전략',s:'자기이해',code:'GEN001-01',prof:'—',
+      time:'—',book:'—',note:''},
+  body:{n:'보디빌딩',s:'보디빌딩',code:'PE003-03',prof:'—',
+      time:'—',book:'—',note:''}
 };
 var CORDER=['bd','algo','net','llm','la','self','body'];
 
-var LMS = {"courses":{"bd":{"id":100558,"short":"빅데이터","name":"빅데이터분산처리시스템"},"algo":{"id":97892,"short":"알고리즘","name":"알고리즘"},"net":{"id":97879,"short":"컴퓨터네트워크","name":"컴퓨터네트워크"},"llm":{"id":95354,"short":"거대언어모델","name":"거대언어모델과챗GPT"},"la":{"id":99650,"short":"전산선형대수","name":"전산선형대수학"},"self":{"id":95174,"short":"자기이해","name":"자기이해와학습전략"},"body":{"id":98359,"short":"보디빌딩","name":"보디빌딩"}},"mods":{"bd":{"1":779801,"2":779802,"3":779803,"4":779804,"5":779805,"6":779806,"7":779807,"8":779808,"9":779809,"10":779810,"11":779811,"12":779812,"13":779813,"14":779814,"15":779815,"16":779816},"algo":{"1":737497,"2":737498,"3":737499,"4":737500,"5":737501,"6":737502,"7":737503,"8":737504,"9":737505,"10":737506,"11":737507,"12":737508,"13":737509,"14":737510,"15":737511,"16":737512},"net":{"1":737289,"2":737290,"3":737291,"4":737292,"5":737293,"6":737294,"7":737295,"8":737296,"9":737297,"10":737298,"11":737299,"12":737300,"13":737301,"14":737302,"15":737303,"16":737304},"llm":{"1":697305,"2":697306,"3":697307,"4":697308,"5":697309,"6":697310,"7":697311,"8":697312,"9":697313,"10":697314,"11":697315,"12":697316,"13":697317,"14":697318,"15":697319,"16":697320},"la":{"1":765385,"2":765386,"3":765387,"4":765388,"5":765389,"6":765390,"7":765391,"8":765392,"9":765393,"10":765394,"11":765395,"12":765396,"13":765397,"14":765398,"15":765399,"16":765400},"self":{"1":694457,"2":694458,"3":694459,"4":694460,"5":694461,"6":694462,"7":694463,"8":694464,"9":694465,"10":694466,"11":694467,"12":694468,"13":694469,"14":694470,"15":694471,"16":694472},"body":{"1":744857,"2":744858,"3":744859,"4":744860,"5":744861,"6":744862,"7":744863,"8":744864,"9":744865,"10":744866,"11":744867,"12":744868,"13":744869,"14":744870,"15":744871,"16":744872}},"vids":[{"c":"bd","w":1,"t":"01-BigData","i":1050843,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":1,"t":"02-ApacheHadoop","i":1050844,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":1,"t":"VirtualEnvironment","i":1050871,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":1,"t":"SSH-Key","i":1050873,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":2,"t":"03-Spark-basic-1","i":1050845,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":2,"t":"04-Spark-basic-2","i":1050846,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":2,"t":"InstallPySpark","i":1050875,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":3,"t":"05-Spark-Applications-new","i":1050847,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":3,"t":"06-Spark-Applications-Examples-1","i":1050848,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":4,"t":"07-Spark-Application-examples-2","i":1050849,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":4,"t":"08-HDF5-new","i":1050850,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":5,"t":"09-NetCDF4-new","i":1050851,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":5,"t":"10-PublicDataCollection-new","i":1050852,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":6,"t":"11-UseOpenAPI","i":1050853,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":6,"t":"12-ParallelComputing-new","i":1050854,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":7,"t":"13-ParallelComputing-Chap2","i":1050855,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":7,"t":"14-ParallelComputing-Chap4","i":1050856,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":9,"t":"15-Chap5-Scan-new","i":1050857,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":9,"t":"16-how-to-use-GIT","i":1050858,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":10,"t":"17-vectorization-new","i":1050859,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":10,"t":"18-OpenMP-new","i":1050860,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":11,"t":"19-OpenMP-part2","i":1050861,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":11,"t":"20-MPI-new","i":1050862,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":12,"t":"21-MPI-part2","i":1050863,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":12,"t":"22-hybrid-mpi","i":1050864,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":13,"t":"23-GPUprogramming","i":1050865,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":13,"t":"24-RAPIDS","i":1050867,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":14,"t":"25-DirectiveBasedGPUProgramming-new","i":1050869,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":14,"t":"26-JAX-part1","i":1050870,"l":null,"a":1,"du":"","sec":0},{"c":"algo","w":1,"t":"AL_Week1_Module0_session1","i":1052057,"l":null,"a":1,"du":"","sec":0},{"c":"algo","w":1,"t":"AL_Week1_Module0_session2","i":1052094,"l":null,"a":1,"du":"","sec":0},{"c":"algo","w":2,"t":"AL_Week2_Module1_session1_part1","i":1062862,"l":null,"a":1,"du":"","sec":0},{"c":"algo","w":2,"t":"AL_Week2_Module1_session1_part2","i":1062863,"l":null,"a":1,"du":"","sec":0},{"c":"algo","w":2,"t":"AL_Week2_Module1_session1_part3","i":1062864,"l":null,"a":1,"du":"","sec":0},{"c":"net","w":1,"t":"Week01-01","i":1053693,"l":null,"a":1,"du":"","sec":0},{"c":"net","w":1,"t":"Week01-02","i":1053694,"l":null,"a":1,"du":"","sec":0},{"c":"net","w":2,"t":"Week2-01","i":1055818,"l":null,"a":1,"du":"","sec":0}],"att":[],"files":[{"c":"bd","w":8,"t":"FinalProject.pdf","i":5867202},{"c":"algo","w":1,"t":"AL_Module0_Week1_Intro.pdf","i":5799192},{"c":"algo","w":2,"t":"AL_Week2_Module1_session1_analysis_asymptotic.pdf","i":5889562},{"c":"la","w":1,"t":"syllabus.pptx","i":5870815},{"c":"la","w":2,"t":"1주_05_벡터.pptx","i":5893706},{"c":"la","w":2,"t":"2주_08_벡터내적외적(3e).pptx","i":5895758}],"asg":[{"c":"bd","n":"Midterm ","due":"2026-10-20T00:00:00Z","pts":100.0,"i":251222,"st":"on_paper"},{"c":"bd","n":"Final Project Presentation","due":"2026-12-08T00:00:00Z","pts":100.0,"i":251224,"st":"none"},{"c":"bd","n":"Final Project Report Submission","due":"2026-12-15T14:59:59Z","pts":100.0,"i":251225,"st":"online_upload"},{"c":"bd","n":"Proposal submission","due":"2026-10-21T14:59:59Z","pts":10.0,"i":252558,"st":"online_upload"},{"c":"algo","n":"Exam_MidTerm","due":null,"pts":30.0,"i":250437,"st":"none"},{"c":"algo","n":"Exam_Final","due":null,"pts":30.0,"i":250438,"st":"none"},{"c":"algo","n":"Project","due":null,"pts":30.0,"i":251741,"st":"none"}],"done":[1050843,1050844],"status":{"1050843":"attendance","1050844":"attendance"},"asof":"2026-09-07 16:38"};
+var LMS = {"courses":{"bd":{"id":100558,"short":"빅데이터","name":"빅데이터분산처리시스템"},"algo":{"id":97892,"short":"알고리즘","name":"알고리즘"},"net":{"id":97879,"short":"컴퓨터네트워크","name":"컴퓨터네트워크"},"llm":{"id":95354,"short":"거대언어모델","name":"거대언어모델과챗GPT"},"la":{"id":99650,"short":"전산선형대수","name":"전산선형대수학"},"self":{"id":95174,"short":"자기이해","name":"자기이해와학습전략"},"body":{"id":98359,"short":"보디빌딩","name":"보디빌딩"}},"mods":{"bd":{"1":779801,"2":779802,"3":779803,"4":779804,"5":779805,"6":779806,"7":779807,"8":779808,"9":779809,"10":779810,"11":779811,"12":779812,"13":779813,"14":779814,"15":779815,"16":779816},"algo":{"1":737497,"2":737498,"3":737499,"4":737500,"5":737501,"6":737502,"7":737503,"8":737504,"9":737505,"10":737506,"11":737507,"12":737508,"13":737509,"14":737510,"15":737511,"16":737512},"net":{"1":737289,"2":737290,"3":737291,"4":737292,"5":737293,"6":737294,"7":737295,"8":737296,"9":737297,"10":737298,"11":737299,"12":737300,"13":737301,"14":737302,"15":737303,"16":737304},"llm":{"1":697305,"2":697306,"3":697307,"4":697308,"5":697309,"6":697310,"7":697311,"8":697312,"9":697313,"10":697314,"11":697315,"12":697316,"13":697317,"14":697318,"15":697319,"16":697320},"la":{"1":765385,"2":765386,"3":765387,"4":765388,"5":765389,"6":765390,"7":765391,"8":765392,"9":765393,"10":765394,"11":765395,"12":765396,"13":765397,"14":765398,"15":765399,"16":765400},"self":{"1":694457,"2":694458,"3":694459,"4":694460,"5":694461,"6":694462,"7":694463,"8":694464,"9":694465,"10":694466,"11":694467,"12":694468,"13":694469,"14":694470,"15":694471,"16":694472},"body":{"1":744857,"2":744858,"3":744859,"4":744860,"5":744861,"6":744862,"7":744863,"8":744864,"9":744865,"10":744866,"11":744867,"12":744868,"13":744869,"14":744870,"15":744871,"16":744872}},"vids":[{"c":"bd","w":1,"t":"01-BigData","i":1050843,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":1,"t":"02-ApacheHadoop","i":1050844,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":1,"t":"VirtualEnvironment","i":1050871,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":1,"t":"SSH-Key","i":1050873,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":2,"t":"03-Spark-basic-1","i":1050845,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":2,"t":"04-Spark-basic-2","i":1050846,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":2,"t":"InstallPySpark","i":1050875,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":3,"t":"05-Spark-Applications-new","i":1050847,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":3,"t":"06-Spark-Applications-Examples-1","i":1050848,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":4,"t":"07-Spark-Application-examples-2","i":1050849,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":4,"t":"08-HDF5-new","i":1050850,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":5,"t":"09-NetCDF4-new","i":1050851,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":5,"t":"10-PublicDataCollection-new","i":1050852,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":6,"t":"11-UseOpenAPI","i":1050853,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":6,"t":"12-ParallelComputing-new","i":1050854,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":7,"t":"13-ParallelComputing-Chap2","i":1050855,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":7,"t":"14-ParallelComputing-Chap4","i":1050856,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":9,"t":"15-Chap5-Scan-new","i":1050857,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":9,"t":"16-how-to-use-GIT","i":1050858,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":10,"t":"17-vectorization-new","i":1050859,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":10,"t":"18-OpenMP-new","i":1050860,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":11,"t":"19-OpenMP-part2","i":1050861,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":11,"t":"20-MPI-new","i":1050862,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":12,"t":"21-MPI-part2","i":1050863,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":12,"t":"22-hybrid-mpi","i":1050864,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":13,"t":"23-GPUprogramming","i":1050865,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":13,"t":"24-RAPIDS","i":1050867,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":14,"t":"25-DirectiveBasedGPUProgramming-new","i":1050869,"l":null,"a":1,"du":"","sec":0},{"c":"bd","w":14,"t":"26-JAX-part1","i":1050870,"l":null,"a":1,"du":"","sec":0},{"c":"algo","w":1,"t":"AL_Week1_Module0_session1","i":1052057,"l":null,"a":1,"du":"","sec":0},{"c":"algo","w":1,"t":"AL_Week1_Module0_session2","i":1052094,"l":null,"a":1,"du":"","sec":0},{"c":"algo","w":2,"t":"AL_Week2_Module1_session1_part1","i":1062862,"l":null,"a":1,"du":"","sec":0},{"c":"algo","w":2,"t":"AL_Week2_Module1_session1_part2","i":1062863,"l":null,"a":1,"du":"","sec":0},{"c":"algo","w":2,"t":"AL_Week2_Module1_session1_part3","i":1062864,"l":null,"a":1,"du":"","sec":0},{"c":"net","w":1,"t":"Week01-01","i":1053693,"l":null,"a":1,"du":"","sec":0},{"c":"net","w":1,"t":"Week01-02","i":1053694,"l":null,"a":1,"du":"","sec":0},{"c":"net","w":2,"t":"Week2-01","i":1055818,"l":null,"a":1,"du":"","sec":0}],"att":[],"files":[{"c":"bd","w":1,"t":"01-BigData.pdf","i":5916668},{"c":"bd","w":1,"t":"02-ApacheHadoop.pdf","i":5916670},{"c":"bd","w":2,"t":"03-ApacheSpark-Basic.pdf","i":5916599},{"c":"bd","w":2,"t":"04-ApacheSpark-Basic-2.pdf","i":5916600},{"c":"bd","w":3,"t":"05-ApacheSpark-Applications.pdf","i":5916603},{"c":"bd","w":4,"t":"08-HDF5.pdf","i":5916609},{"c":"bd","w":5,"t":"09-NetCDF4.pdf","i":5916610},{"c":"bd","w":5,"t":"10-PublicDataCollection.pdf","i":5916615},{"c":"bd","w":6,"t":"11-UseOpenAPI.pdf","i":5916616},{"c":"bd","w":6,"t":"12-ParallelComputing.pdf","i":5916629},{"c":"bd","w":7,"t":"13-ParallelComputing-Chap2.pdf","i":5916630},{"c":"bd","w":7,"t":"14-ParallelComputing-Chap4.pdf","i":5916634},{"c":"bd","w":8,"t":"FinalProject.pdf","i":5867202},{"c":"bd","w":9,"t":"15-ReductionScan.pdf","i":5916636},{"c":"bd","w":10,"t":"17-Vectorization.pdf","i":5916639},{"c":"bd","w":10,"t":"18-OpenMP.pdf","i":5916641},{"c":"bd","w":11,"t":"19-OpenMP-part2.pdf","i":5916643},{"c":"bd","w":11,"t":"20-MPI.pdf","i":5916645},{"c":"bd","w":12,"t":"21-MPI-part2.pdf","i":5916647},{"c":"bd","w":12,"t":"22-MPI-part3.pdf","i":5916648},{"c":"bd","w":13,"t":"23-GPUprogramming.pdf","i":5916650},{"c":"bd","w":13,"t":"24-GPUprogramming.pdf","i":5916651},{"c":"bd","w":14,"t":"25-OpenACC-v1.pdf","i":5916656},{"c":"algo","w":1,"t":"AL_Module0_Week1_Intro.pdf","i":5799192},{"c":"algo","w":2,"t":"AL_Week2_Module1_session1_analysis_asymptotic.pdf","i":5889562},{"c":"la","w":1,"t":"syllabus.pptx","i":5870815},{"c":"la","w":2,"t":"1주_05_벡터.pptx","i":5893706},{"c":"la","w":2,"t":"2주_08_벡터내적외적(3e).pptx","i":5895758}],"asg":[{"c":"bd","n":"Midterm ","due":"2026-10-20T00:00:00Z","pts":100.0,"i":251222,"st":"on_paper"},{"c":"bd","n":"Final Project Presentation","due":"2026-12-08T00:00:00Z","pts":100.0,"i":251224,"st":"none"},{"c":"bd","n":"Final Project Report Submission","due":"2026-12-15T14:59:59Z","pts":100.0,"i":251225,"st":"online_upload"},{"c":"bd","n":"Proposal submission","due":"2026-10-21T14:59:59Z","pts":10.0,"i":252558,"st":"online_upload"},{"c":"bd","n":"Homework 1","due":"2026-09-17T14:59:59Z","pts":2.0,"i":255089,"st":"online_upload"},{"c":"bd","n":"Homework 2","due":"2026-09-23T14:59:59Z","pts":2.0,"i":255090,"st":"online_upload"},{"c":"bd","n":"Homework 3","due":"2026-09-30T14:59:59Z","pts":2.0,"i":255092,"st":"online_upload"},{"c":"bd","n":"Homework 4","due":"2026-10-07T14:59:59Z","pts":2.0,"i":255094,"st":"online_upload"},{"c":"bd","n":"Homework 5","due":"2026-10-14T14:59:59Z","pts":2.0,"i":255096,"st":"online_upload"},{"c":"bd","n":"Homework 6","due":"2026-10-21T14:59:59Z","pts":2.0,"i":255097,"st":"online_upload"},{"c":"bd","n":"Homework 7","due":"2026-11-04T14:59:59Z","pts":2.0,"i":255098,"st":"online_upload"},{"c":"bd","n":"Homework 8","due":"2026-11-11T14:59:59Z","pts":2.0,"i":255099,"st":"online_upload"},{"c":"bd","n":"Homework 9","due":"2026-11-18T14:59:59Z","pts":2.0,"i":255100,"st":"online_upload"},{"c":"bd","n":"Homework 10","due":"2026-11-25T14:59:59Z","pts":2.0,"i":255102,"st":"online_upload"},{"c":"bd","n":"Homework 11","due":"2026-12-02T14:59:59Z","pts":2.0,"i":255103,"st":"online_upload"},{"c":"bd","n":"Homework 12","due":"2026-12-09T14:59:59Z","pts":2.0,"i":255104,"st":"online_upload"},{"c":"algo","n":"Exam_MidTerm","due":null,"pts":30.0,"i":250437,"st":"none"},{"c":"algo","n":"Exam_Final","due":null,"pts":30.0,"i":250438,"st":"none"},{"c":"algo","n":"Project","due":null,"pts":30.0,"i":251741,"st":"none"},{"c":"llm","n":"Quiz for Chapter 1","due":"2026-09-17T00:50:00Z","pts":40.0,"i":255076,"st":"online_quiz"}],"done":[1050843,1050844,1050845,1050846,1052057,1052094,1053693,1053694,1055818,1062862,1062863,1062864],"status":{"1050843":"attendance","1050844":"attendance","1050845":"attendance","1050846":"attendance","1052057":"attendance","1052094":"attendance","1062862":"attendance","1062863":"attendance","1062864":"attendance","1053693":"attendance","1053694":"attendance","1055818":"attendance"},"asof":"2026-09-11 03:33","notices":[{"c":"llm","title":"강의 관련 공","body":"해당 수업은 SEMO Class로 월요일 수업은 교수님의 Pre-lecture video로 대체될 예정이며, 목요일 수업은 교수님의 보충 강의, 오프라인 토론, 멘토들과의 프로젝트 관련 수업을 진행할 예정입니다. 추가적으로, Chapter 1에 대한 퀴즈와 토론방이 생성되었습니다. 퀴즈는 '퀴즈 및 설문' 탭에 생성되었으며 데드라인과 안내를 확인하여 풀어주시고, 온라인 토론은 '토론' 탭에서 확인하실 수 있으며 데 드라인 확인하여 진행해주시기 바랍니다. (온라인 토론은 질문 1개 답변2개를 만점으로 기준으로 하여 성적에 반영할 예정","date":"2026-09-10","url":"https://canvas.korea.ac.kr/courses/95354/discussion_topics/416274"},{"c":"bd","title":"이산구조및연습 소그룹 멘토 모집","body":"이산구조및연습 수업 소그룹 멘토를 모집 합니다. 하는일: 소그룹활동 멘토링, 소그룹 활동 과제의 학습활동 점검 등 보상: 학기 종료후 멘토지원금 지원 관심있는 학생은 연락주세요. shinkang@korea.ac.kr 강신후 드림.","date":"2026-09-09","url":"https://canvas.korea.ac.kr/courses/100558/discussion_topics/415842"},{"c":"body","title":"OT내용 공지합니다. ","body":"1. 수업방식 : 20 : 1 PT 형식 2. 출석 매우 중요 ! 결석은 2번까지만 인정 3번부터는 F 입니다. 부득이하게 결석 시 결석 사유서 제출하면 출석으로 인정해드립니다(핸드폰으로 연락줄때 본인의 소속을 밝혀주세요. 고려대학교 000학과 000입니다. ~~~ 3. 지각은 5~10분까지만 지각으로 인정 그 이상은 결석입니다. 4. 실기 수업이기 때문에 운동 할 수 있는 복장 필수 ! [ 운동복 O / 운동 할 수 없는 복장 X ex ) 청바지, 정장, 치마, 구두 등등.. 입고 올 경우 수업을 안받겠다는 걸로 받아들이고 결석처","date":"2026-09-01","url":"https://canvas.korea.ac.kr/courses/98359/discussion_topics/411990"},{"c":"bd","title":"Welcome to DCCS 410 Bigdata Distributed Processing System","body":"Dear Students, Welcome to DCCS 410 Bigdata Distributed Processing System course for the fall semester of 2026! I am excited to have you in this class, and I look forward to an engaging and productive semester together. Course Overview In this course, you will learn how to leverage high-performance c","date":"2026-08-31","url":"https://canvas.korea.ac.kr/courses/100558/discussion_topics/410982"}]};
 var CV = 'https://canvas.korea.ac.kr';
 function courseId(c){ return LMS.courses[c] ? LMS.courses[c].id : null; }
 function modURL(c,w){
@@ -594,11 +596,13 @@ function modURL(c,w){
 var WK={};
 
 WK.bd=[
- {w:1,t:'빅데이터와 Apache Hadoop',q:'한 대의 서버로 안 되는 순간, 무엇이 달라지는가?',src:'m',
-  pts:['빅데이터는 크기만의 문제가 아니다 — 양(Volume)·속도(Velocity)·다양성(Variety)이 동시에 커지면서 한 대의 메모리·디스크·대역폭을 넘어서는 순간 <b>분산이 선택이 아니라 강제</b>가 된다.',
-       '<b>HDFS</b>: 파일을 큰 블록으로 쪼개 여러 노드에 복제 저장한다. NameNode가 메타데이터를, DataNode가 실제 블록을 맡는다. 노드 고장은 예외가 아니라 전제 조건으로 설계돼 있다.',
-       '<b>MapReduce</b>: 데이터를 계산으로 옮기는 대신 계산을 데이터가 있는 노드로 보낸다(data locality). map → shuffle → reduce, 자원 배분은 YARN이 맡는다.',
-       '실습 환경이 이번 주의 진짜 과제다 — WSL2 + Ubuntu, python 가상환경, SSH 키 생성 후 GitHub 등록. <b>여기서 막히면 2주차 이후가 전부 밀린다.</b>']},
+ {w:1,t:'Lab 01: 디지털 트윈 개요 · 5단계 파이프라인 · 40-line 미니 시뮬레이션',q:'관측 피드백이 없다면 가상 모델은 왜 결국 실제와 달라지는가?',src:'m',
+  pts:['<b>Digital Twin(디지털 트윈)</b> = 실제 물리 시스템의 가상 모델을 관측 데이터로 지속 업데이트하는 <b>폐루프(closed-loop)</b>: 관측 → 상태 업데이트 → 예측 → 반복. 이 반복이 없으면 그냥 시뮬레이션. 실제 시스템: DestinE(ECMWF/EU·기후), NOAA EO-DT(지구 관측), 이 수업(2D 도시 온도장).',
+       '<b>5단계 DT 파이프라인</b>: ① 관측 수집(OpenAPI·위성, W5·9) → ② 공간·시간 정렬(Spark·Xarray/Dask·NetCDF/Zarr, W3-4·6-7) → ③ 상태 예측(열확산 수치모델: serial→OpenMP→MPI→JAX, W10-12) → ④ 관측으로 업데이트(Nudging, W13) → ⑤ 대시보드·분석(W14-15). 5단계가 합쳐져 하나의 시스템.',
+       '<b>열확산 방정식</b>: ∂T/∂t = α∇²T + f(x,y,t). α=열확산계수, f=외부 열입력(낮 태양열·밤 냉각). 명시적 유한차분(explicit finite-difference)으로 시간 진행. <b>CFL 안정 조건</b>: α·Δt/Δx² ≤ 1/4. 오늘 실험: CFL=0.20 → 안정.',
+       '<b>Persistence baseline</b>: T̂(t+k) = T(t) — "지금 온도가 계속 유지된다"는 가정. 단기 예측에서 놀랍도록 강력한 기준선. M0 마일스톤이 이것.',
+       '<b>Open-loop vs Closed-loop(Nudging)</b>: 예측 모델에는 외부 입력 f가 없으므로 시간이 지날수록 실제와 이탈(open-loop drift). Nudging으로 폐루프 구성: <b>T ← T + κ·(y_obs − T)</b> (관측 지점에서만). κ=0이면 보정 없음, κ=1이면 관측값으로 완전 대체. <b>25개 센서만으로 RMSE 5.34 → 4.12 감소.</b>',
+       '<b>왜 빅데이터·분산처리가 필요한가?</b> 오늘 실험 = 50×50 grid·200스텝 = 수 MB. 실제 도시 연간 다변수 데이터셋(앙상블·위성 포함) = 테라바이트 이상 → 단일 노트북으로 처리 불가 → Spark·Dask·OpenMP/MPI·JAX 필요. 각 도구가 다른 스케일링 문제 해결.']},
  {w:2,t:'Apache Spark 기초 1·2',q:'MapReduce는 왜 Spark로 대체되었나?',src:'s',
   pts:['<b>RDD</b>는 불변(immutable) 분산 컬렉션이다. 변환(transformation)은 즉시 실행되지 않고 계보(lineage)만 쌓이다가, 액션(action)에서 한 번에 실행된다. 이 계보가 곧 장애 복구 수단이다.',
        'MapReduce는 단계마다 디스크에 쓰지만 Spark는 중간 결과를 메모리에 유지한다. 반복 계산(머신러닝·그래프)에서 격차가 크게 벌어진다.',
@@ -656,14 +660,18 @@ WK.bd=[
 ];
 
 WK.algo=[
- {w:1,t:'Module 0: Introduction — 알고리즘이란?',q:'알고리즘이란 무엇이고, 왜 효율이 중요한가?',src:'s',
-  pts:['알고리즘은 <b>문제를 해결하는 단계적 절차</b>다. 같은 문제도 어떤 알고리즘을 쓰느냐에 따라 1초 만에 끝날 수도, 우주 나이보다 오래 걸릴 수도 있다.',
-       '이 과목은 영어 수업이다. 강의 슬라이드·제출물·시험 모두 영어. 첫 주에 Semo/LMS 등록 상태를 확인할 것.',
-       '평가 구조: 중간고사 30% · 기말고사 30% · <b>그룹프로젝트 30%</b> · 태도 10%.',
-       '교재: Introduction to Algorithms (CLRS 4판) — MIT Press 2022.']},
- {w:2,t:'Module 1: Analysis',q:'알고리즘의 비용을 어떻게 측정하는가?',src:'s',
-  pts:['점근 표기법(Big-O, Ω, Θ) — 입력 크기 n이 커질 때 실행 시간이 어떻게 증가하는지.',
-       '<b>최선·평균·최악</b> 경우를 구분하는 습관. 대부분의 분석은 최악을 기준으로 한다.',
+ {w:1,t:'Module 0: Introduction — 알고리즘이란? · 과목 안내',q:'알고리즘이란 무엇이고, 왜 효율이 중요한가?',src:'m',
+  pts:['알고리즘 = <b>정확하고(precise) 순서가 고정된(step-by-step) 절차</b>. Input → 단계 실행 → Output. 브라우니 레시피 비유. 정확성(Correctness)만으로는 부족 — 시간·공간 효율도 분석해야 한다.',
+       '<b>플립러닝(SEMO)</b>: 사전 녹화 영상을 반드시 보고 올 것. 수업 시간은 요약 재청취 아님 — 이해 확인·퀴즈·프로젝트 컨설팅. 매주 LMS 공지로 대면/Zoom 확인.',
+       '평가: 중간고사 30%(8주차) · 기말고사 30%(16주차) · <b>그룹프로젝트 30%</b> · 태도 10%. 닫힌책(closed-book) 필기 시험. <b>영어 수업.</b> 담당교수: 전병준 교수 · Office: C298 · 오피스아워: 금요일(이메일 사전 예약).',
+       '<b>주교재: CLRS 4판</b> (Introduction to Algorithms, Cormen et al., MIT Press 2022). 참고서: Kleinberg·Tardos, Sedgewick·Wayne, Skiena. 슬라이드가 실질적 메인 자료.',
+       '<b>프로젝트 5단계</b>: ①토픽 선정 → ②중간 리포트 → ③사전 발표 녹화 업로드 → ④현장 Q&A(듣는 팀이 질문·발표 팀이 채점) → ⑤회고 리포트(1쪽). 도메인: 헬스케어/바이오 · 모빌리티/내비 · 로보틱스 · 물류/운영.',
+       '<b>팀 구성</b>: 최대 3명. 솔로 가능(단, pair 협업 보너스 없음). 발표는 <b>영어</b>, Q&A는 한·영 모두 가능. <b>GenAI 사용 허용</b> — 단 인용 필수·이해 없는 복붙 금지, 시험 중 AI 사용 불가.']},
+ {w:2,t:'Module 1: Analysis — 점근 표기법 · 복잡도 분석',q:'알고리즘의 비용을 어떻게 측정하는가?',src:'m',
+  pts:['<b>왜 실제 실행 시간을 쓰지 않는가?</b> 기계·컴파일러마다 달라서 공정 비교 불가. 대신 입력 크기 n과 연산 횟수로 기계 독립적 분석을 한다.',
+       '<b>Complexity 3가지</b>: 최악 W(n)(상한, 가장 중요 — 실제 시스템의 안전 보장), 평균 A(n)(입력 분포 필요), 최선 B(n)(이상적 입력, 신뢰도 낮음).',
+       '<b>삽입 정렬 분석</b>: 비교(comparison)가 지배 연산. 최선 n−1, 최악 n(n−1)/2, 평균 ≈n²/4. 정렬된 입력이 가장 빠르고 역순 입력이 가장 느리다.',
+       '<b>점근 분석 표기법</b>: Big-O(f ≤ c·g, 상한), Ω(c·g ≤ f, 하한), Θ(c₁·g ≤ f ≤ c₂·g, tight bound). 10n² vs 0.1n³은 n=100 기점으로 n²가 유리해진다.',
        'A1 과제 마감 주차.'],tag_w:2},
  {w:3,t:'Module 2: Divide-and-Conquer',q:'문제를 나누면 어떻게 더 쉬워지는가?',src:'s',
   pts:['분할·정복·합병(Divide → Conquer → Combine). 대표 예: 합병 정렬(O(n log n)), 이진 탐색.',
@@ -712,15 +720,18 @@ WK.algo=[
 
 WK.net=[
  {w:1,t:'What Is the Internet — 오리엔테이션 · Ch.1 · LLM Lab 셋업',q:'인터넷이란 무엇이고, 이 과목의 실습 도구는 어떻게 준비하는가?',src:'m',
-  pts:['<b>1-1 과목 소개 + What Is the Internet</b> — 교재 Ch.1 전체. 인터넷을 "기술적 관점"(프로토콜·호스트·링크)과 "서비스 관점"(앱에게 인프라를 제공하는 것) 두 방향으로 정의한다.',
-       '<b>1-2 학기 전체 미리보기 (Semester Preview)</b> — 주제 영역별로 슬라이드 1장씩. 학기 흐름을 처음에 잡아 두면 뒤에서 헤매지 않는다. Wrap-up에서 환경 준비 체크리스트 확인.',
-       '<b>1-3 LLM 에이전트 실습 환경 셋업</b> — App · VS Code · Terminal 설치, LLM / Agent / Harness 배경 개념. Basic Usage → Advance(Loop · Case Study)까지. <b>이 도구를 16주 내내 Lab에서 쓴다 — 1주차에 반드시 셋업 완료.</b>',
+  pts:['<b>평가</b>: 팀프로젝트 60%(9→15주차 최종 보고서·발표) · 지필고사 30%(8주차 단 1회) · 수업참여도 10%(실습 보고서+퀴즈+진행 보고서). <b>교재: Kurose&Ross 9판</b> — 섹션 번호가 8판과 다르므로 반드시 9판으로 확인.',
+       '<b>인터넷 2가지 관점</b>: ① Nuts-and-Bolts — 호스트·링크·패킷 스위치(라우터)의 집합체. ② Service — 분산 앱(웹·이메일·스트리밍)에 통신 인프라를 제공하는 서비스 체계. 프로토콜 = 메시지 형식·순서·동작을 정의한 규약.',
+       '<b>패킷 스위칭 vs 회선 스위칭</b>: 패킷 — 저장 후 전송(Store-and-Forward), 버퍼 가득 차면 패킷 손실. 회선 — 자원 사전 예약(FDM/TDM), 데이터 없어도 채널 점유.',
+       '<b>4가지 지연</b>: Total = d_proc(헤더 처리) + d_queue(버퍼 대기, 트래픽에 따라 가변) + d_trans(= L/R, 패킷 전송) + d_prop(= d/s, 물리 전파). 시험에 계산 문제로 출제됨.',
+       '<b>5계층 프로토콜 스택</b>(Top-Down): 응용(HTTP·DNS) → 전송(TCP·UDP) → 네트워크(IP) → 링크(Ethernet) → 물리. 이 강의는 응용→물리 순서로 진행. <b>1-7주: 실습 보고서(스크린샷+Caption 필수)</b> · LLM Lab 환경 이 주에 셋업.',
        'Assignment: Week 1 과제 있음.']},
  {w:2,t:'Application Layer — HTTP & Web (§2.1–§2.2)',q:'클라이언트와 서버는 어떻게 대화하는가?',src:'m',
-  pts:['<b>2-1 Application Layer 개요</b> — Client-server vs P2P 아키텍처(§2.1.1). 프로세스와 소켓: 네트워크의 양 끝은 프로세스이고, 소켓이 그 문이다(§2.1.2). TCP/UDP가 앱에게 제공하는 서비스의 4가지 차원(§2.1.3-2.1.4).',
-       '<b>2-2 HTTP</b> — Persistent vs Non-persistent connection의 RTT 차이(§2.2.2). HTTP 메시지 포맷: 요청줄·헤더·바디(§2.2.3). 쿠키로 stateless HTTP에 상태를 붙이는 방법(§2.2.4). Conditional GET로 브라우저 캐시 갱신(§2.2.5). HTTP/2 프레이밍·멀티플렉싱, HTTP/3 QUIC(§2.2.6-2.2.7).',
-       '<b>2-3 Lab</b> — LLM 에이전트로 웹 서버 정보를 조사하는 실습. Basic → Advanced(실제 서베이로 확장).',
-       '62장 분량. Assignment: 없음(이 주는 과제 없음).']},
+  pts:['<b>Client-Server vs P2P</b>: CS — 서버는 고정 IP·항상 대기, 클라이언트끼리 직접 통신 불가. P2P — Self-scalability(새 피어 = 수요 증가 + 공급 증가). 소켓 = 앱층과 전송층 사이 인터페이스(문). 주소: IP(호스트) + 포트번호(프로세스). TCP는 신뢰·순서 보장, UDP는 최소 오버헤드 — 둘 다 <b>대역폭·지연 보장 없음</b>.',
+       '<b>HTTP</b>: Stateless — 서버는 이전 요청 기억 안 함. 비지속(HTTP/1.0) — 객체마다 TCP 재연결(2×RTT). 지속(HTTP/1.1) — 하나의 TCP 연결로 여러 객체 처리. 상태 코드: 200 OK, 301 이동, 304 Not Modified(캐시 유효), 404 없음.',
+       '<b>쿠키</b> = Stateless HTTP에 상태 부여. <b>Conditional GET</b> = If-modified-since 헤더로 캐시 신선도 확인 — 변경 없으면 304 응답(바디 없음, 대역폭 절약).',
+       '<b>HOL(Head-of-Line) Blocking</b>: 앞 대형 객체가 막히면 뒤 작은 객체 모두 대기. HTTP/2: <b>프레임 멀티플렉싱</b>으로 HTTP 레벨 HOL 해결(TCP 레벨은 남음). HTTP/3: <b>QUIC(UDP 기반)</b>으로 TCP 레벨 HOL도 해결 + 연결 설정 지연 대폭 단축.',
+       '2-3 Lab: LLM 에이전트로 웹 서버 정보 조사. Assignment: 없음.']},
  {w:3,t:'DNS, SMTP, P2P, CDN',q:'도메인은 어떻게 IP로 바뀌는가?',src:'s',
   pts:['계층형 DNS: 루트(13개) → TLD(.com/.kr) → 권한 DNS. 캐싱으로 대부분은 로컬 DNS에서 끝난다.',
        'CDN: 콘텐츠를 사용자 근처 서버에 복제해 지연을 줄인다. Anycast 라우팅.']},
@@ -740,9 +751,9 @@ WK.net=[
   pts:['Link-state(Dijkstra, OSPF): 전체 토폴로지를 알고 최단 경로 계산.',
        'Distance-vector(Bellman-Ford, RIP): 이웃에서 받은 거리 정보로 계산. 느린 수렴.',
        'BGP: 인터넷 전체를 연결하는 AS 간 라우팅. 정책 기반(경제적·정치적 이유로 경로 선택).']},
- {w:8,t:'중간고사',q:'',src:'m',tag:'시험',
-  pts:['<b>중간고사</b> — 1~7주차 범위(응용계층·전송계층·네트워크계층 까지).',
-       'Wireshark 기반 패킷 분석을 실습했다면 캡처 파일 읽는 문제가 나올 수 있다.']},
+ {w:8,t:'지필고사 (단 1회)',q:'',src:'m',tag:'시험',
+  pts:['<b>지필고사 30%</b> — 이 과목의 유일한 시험. 1~7주차 범위(Ch.1–2 응용계층·전송계층·네트워크계층). 손으로 직접 메커니즘을 서술하는 필기 시험.',
+       '실습 보고서(1~7주)를 성실히 제출했다면 지연/패킷 계산, HTTP 메시지 구조, TCP 흐름 제어 문제를 풀 준비가 된 것이다.']},
  {w:9,t:'Link layer — Ethernet & switching',q:'링크 계층은 어떻게 에러를 감지하는가?',src:'s',
   pts:['CRC(순환 중복 검사): 다항식으로 에러 검출. 에러 수정이 아니라 <b>감지</b>.',
        'Multiple access: CSMA/CD(Ethernet) — 충돌 감지 → 잠시 대기 → 재전송.',
@@ -765,19 +776,25 @@ WK.net=[
  {w:15,t:'Group project presentation & peer evaluation',q:'',src:'m',tag:'발표',
   pts:['<b>팀프로젝트 발표</b>. 프로젝트 결과 공유 + 동료 평가.',
        '소스: LMS를 통해 소스코드(GitHub 저장소 링크)와 보고서 제출.']},
- {w:16,t:'기말고사',q:'',src:'m',tag:'시험',
-  pts:['<b>기말고사</b> — 9~15주차(링크계층·무선·보안·성능·설계).']}
+ {w:16,t:'팀프로젝트 최종 마무리',q:'',src:'s',
+  pts:['<b>기말고사 없음.</b> 이 과목의 유일한 시험은 8주차 지필고사였다.',
+       '15주차 발표·보고서·소스코드 제출까지 완료했다면 학기 종료.']}
 ];
 
 WK.llm=[
  {w:1,t:'Chapter 1 — Introduction to LLM, LM, and ChatGPT',q:'언어모델이란 무엇이고 ChatGPT는 어떻게 동작하는가?',src:'m',
-  pts:['LLM·LM·ChatGPT의 개념과 차이. 이 과목의 목표: 구조를 이해하고 직접 응용할 수 있는 능력.',
-       'SEMO(플립러닝) 수업 방식: <b>사전 영상을 보고 와야</b> 대면 심화 논의가 된다. 퀴즈 60%가 챕터 마감 시 닫히므로 진도를 미루면 퀴즈 기회를 잃는다.',
-       '교재: NLP with Transformers (O\'Reilly). 매주 토론 2건(강의내용·팀프로젝트) 누락 금지.']},
+  pts:['<b>LM</b> = "My favorite food is ___" — 이전 단어 기반으로 다음 단어를 확률 예측. <b>LLM</b> = 방대한 데이터 + 거대 파라미터. GPT-3(175B, 2020) → GPT-3.5(175B+RLHF, 2022) → GPT-4(1T, 2023). 파라미터 = 학습 가능한 가중치 값.',
+       '<b>RLHF</b>(사람 피드백 강화학습): 인간이 응답에 상벌을 줘 윤리·상식 위반 답변 억제. <b>Fine-tuning</b> = 사전학습된 모델에 새 태스크 추가 학습. sLLM(소형 LLM) — LLaMA·BERT는 오픈소스라 대학·기업도 연구 가능.',
+       '<b>ChatGPT 태스크 8가지</b>: ①텍스트 요약 ②정보 추출 ③QA ④텍스트 분류(감정분석) ⑤대화(챗봇) ⑥코드 생성·언어 변환(Python→C++/R) ⑦코드 해석 ⑧추론(수학·논리 문제).',
+       '<b>ChatGPT 한계</b>: Hallucination — 그럴싸하지만 틀린 답변(학습 데이터 부족·편향). 학습 데이터 의존성 — 2021년 9월 이후 사건은 부정확.',
+       '<b>Prompt</b> = LM에게 무엇을 할지 자연어로 지시하는 메시지. 프롬프트 품질이 출력 품질을 결정. <b>Chain of Thought(CoT)</b>: "질문-답" 대신 "질문-풀이과정-답"을 제공하면 수학·추론 능력 대폭 향상.',
+       '<b>Transformer</b>(2017, "Attention is all you need"): RNN Seq2Seq의 장거리 의존성 문제를 Attention으로 해결. <b>GPT</b> = Transformer의 Decoder만 12개 쌓은 구조. 사전학습 후 입력 구조만 바꿔 파인튜닝 — 별도 아키텍처 변경 불필요.',
+       'SEMO 플립러닝: 사전 영상 필수. <b>퀴즈는 챕터 마감 시 닫힘</b> — 진도를 미루면 퀴즈 기회 자체가 사라진다. 매주 토론 2건(강의·팀프로젝트) 누락 금지.']},
  {w:2,t:'Chapter 2 — Traditional Language Model by Seq2Seq',q:'순환 구조의 언어모델은 무엇이고 왜 한계가 생겼는가?',src:'m',
-  pts:['RNN · LSTM · Seq2Seq: 앞에서부터 상태를 넘기며 처리한다. 장거리 의존성에서 기울기 소실이 생긴다.',
-       'Seq2Seq의 인코더–디코더 구조. 이 한계가 Transformer 등장의 직접적 이유.',
-       'llm 2주차 노트를 잘 보존할 것 — 선형대수(la) 고유값 배울 때 행렬 관점으로 다시 연결된다.']},
+  pts:['<b>RNN</b> = 시퀀스 입력(X1…XT)을 처리. ht = tanh(W_x·xt + W_h·h_{t-1} + b) — 모든 시간 단계에서 <b>같은 W 공유</b>. 유형: one-to-many(이미지 캡셔닝), many-to-one(감정분류·스팸), many-to-many(번역·QA). 문자 예측 예제: "hell" → "o".',
+       '<b>Seq2Seq</b> = Encoder(입력 시퀀스를 Context vector 하나로 압축) + Decoder(Context vector에서 출력 시퀀스 생성). 기계 번역 예: "I am a student" → "je suis étudiant". 실제론 LSTM을 사용. <sos>/<eos> 토큰으로 시작/종료 표시.',
+       '<b>Word2Vec</b>(Word Embedding): one-hot vector(10,000차원, 유사도 표현 불가) → 밀집 벡터(dog=[0.2,0.3,...], 차원 설정 가능, 단어 간 유사도 표현 가능).',
+       '<b>RNN 기반 LM의 두 가지 한계</b> → Transformer 등장 배경: ① 정보 손실 — 100단어를 하나의 고정 크기 Context vector로 압축하면 초반 정보가 사라짐. ② <b>Vanishing Gradient</b> — sigmoid 미분 최대값 0.25, 역전파 시 계속 곱해지면 0에 수렴 → 장거리 의존성 학습 불가.']},
  {w:3,t:'Chapter 3 — Transformer · Attention Mechanism',q:'어텐션은 무엇을 계산하는 연산인가?',src:'s',
   pts:['Self-Attention: Q·K·V 행렬 계산 — Q·K^T를 softmax하고 V와 곱한다. 이 과목에서 가장 중요한 연산.',
        'Multi-Head Attention: 여러 어텐션 헤드가 서로 다른 관계를 병렬로 잡는다.',
@@ -824,11 +841,11 @@ WK.llm=[
 ];
 
 WK.la=[
- {w:1,t:'벡터, 내적, 외적',q:'벡터로 무엇을 표현할 수 있는가?',src:'s',
+ {w:1,t:'벡터, 내적, 외적',q:'벡터로 무엇을 표현할 수 있는가?',src:'m',
   pts:['벡터의 기하학적 의미(방향과 크기), 내적(dot product) = 투영의 크기, 외적(cross product) = 법선 벡터.',
        '내적 = |a||b|cosθ — 두 벡터가 이루는 각도를 구하고, 직교 여부를 판별한다.',
        '이 과목은 선형대수의 이론뿐 아니라 <b>머신러닝·AI 응용</b>이 최종 목적이다.']},
- {w:2,t:'행렬 연산 - 1',q:'행렬 곱은 무엇을 하는 연산인가?',src:'s',
+ {w:2,t:'행렬 연산 - 1',q:'행렬 곱은 무엇을 하는 연산인가?',src:'m',
   pts:['행렬 덧셈·스칼라 곱·행렬 곱. 행렬 곱 AB의 (i,j) 성분 = A의 i번째 행과 B의 j번째 열의 내적.',
        '행렬 곱은 교환 법칙이 성립하지 않는다(AB ≠ BA in general).']},
  {w:3,t:'행렬 연산 - 2',q:'',src:'s',
@@ -924,9 +941,9 @@ WK.self=[
 ];
 
 WK.body=[
- {w:1,t:'자기 몸에 대한 자유 토론',q:'',src:'s',
-  pts:['이론 강의. 자신의 체력 목표, 몸 상태, 운동 경험 공유.',
-       '평가: 기말시험 20% · 참여도 80%. 아이파크 헬스 이용료 발생 예정.']},
+ {w:1,t:'폼롤러 스트레칭 — 머리부터 발끝까지',q:'',src:'m',
+  pts:['폼롤러를 이용한 전신 자가근막이완(SMR) 순서: 머리·목 → 어깨·등 → 허리 → 엉덩이·고관절 → 허벅지·종아리 → 발.',
+       '아이파크 헬스 이용료 없음. 평가: 기말시험(Test) 40% · 중간시험(Test) 30% · 출석·태도 30%.']},
  {w:2,t:'Weight Training — Core',q:'',src:'s',
   pts:['코어 근육(복직근·복사근·척추 기립근)을 단련하는 운동 동작 실습.',
        '플랭크, 데드버그, 크런치 등 기본 자세 학습.']},
@@ -1044,8 +1061,11 @@ add({c:'net',t:'그룹 프로젝트 발표',w:15,kind:'발표',est:true,
 add({c:'net',t:'기말고사',w:16,kind:'시험',est:true,
      note:'9~15주차 범위'});
 
-add({c:'llm',t:'Chapter Quiz',w:3,kind:'퀴즈',est:true,
-     note:'<b>퀴즈가 60%</b> — 챕터가 끝날 때마다 블랙보드에 열리고, 마감되면 닫히며 제한시간이 있다'});
+for(var wq=1;wq<=15;wq++){
+  if(wq===8) continue;
+  add({c:'llm',t:'Chapter Quiz',w:wq,kind:'퀴즈',est:true,
+       note:'LearningX — <b>챕터 마감 시 닫힘.</b> 미리 응시할 것. (퀴즈 60%)'});
+}
 for(var w=2;w<=15;w++){
   if(w===8) continue;
   add({c:'llm',t:'토론 2건 — 강의내용 · 팀프로젝트',w:w,kind:'토론',est:true,
@@ -1105,12 +1125,12 @@ var CRS={
   mat:[[1,'주차별 실습 폴더 00~12 확보'],[1,'Syllabus · FinalProject.pdf'],[0,'강의 영상은 LearningX 안']]},
  algo:{parts:[['그룹프로젝트',30,'proj'],['중간고사',30,'exam'],['기말고사',30,'exam'],['태도',10,'att']],
   mat:[[1,'강의계획서 (CLRS 4판 기반)'],[1,'Module0 Week1 Intro PDF'],[0,'2주차 이후 슬라이드 미확보']]},
- net:{parts:[['팀프로젝트',30,'proj'],['중간고사',30,'exam'],['기말고사',30,'exam'],['기타',10,'att']],
-  mat:[[1,'강의계획서 확보'],[0,'강의 슬라이드 미확보']]},
+ net:{parts:[['팀프로젝트',60,'proj'],['지필고사(8주)',30,'exam'],['수업참여도',10,'att']],
+  mat:[[1,'강의계획서 확보'],[1,'1-2주차 정리본'],[0,'강의 슬라이드 미확보']]},
  llm:{parts:[['퀴즈',60,'exam'],['팀프로젝트',20,'proj'],['토론',15,'hw'],['출석',5,'att']],
   mat:[[1,'Chapter 1 · 2'],[0,'Chapter 3 이후 · 퀴즈는 블랙보드'],[1,'중간·기말고사 없음 (강의계획서 확인)']]},
  la:{parts:[['기말고사',50,'exam'],['중간고사',30,'exam'],['기타',20,'hw']],
-  mat:[[1,'강의계획서 확보'],[0,'강의 슬라이드 미확보']]},
+  mat:[[1,'강의계획서 확보'],[1,'강의 슬라이드 1~2주차 확보 (Canvas LMS)']]},
  self:{parts:[['기말고사',40,'exam'],['중간고사',30,'exam'],['출석·참여',30,'att']],
   mat:[[1,'강의계획서 확보'],[1,'P/F 평가 과목']]},
  body:{parts:[['기말고사(Test)',40,'exam'],['중간고사(Test)',30,'exam'],['출석·태도',30,'att']],
@@ -1334,6 +1354,21 @@ function renderNav(route){
 
 /* ===== 홈 ===== */
 var homeWeek=curWeek();
+function noticesHTML(){
+  var list=(LMS.notices||[]);
+  if(!list.length) return '<p class="notice-empty">최근 30일 공지 없음</p>';
+  var h='<div class="noticelist">';
+  list.forEach(function(n){
+    var co=C[n.c];
+    var cname=co?co.s:n.c;
+    h+='<a class="nitem" href="'+esc(n.url)+'" target="_blank" rel="noopener">'+
+       '<span class="ncrs c-'+n.c+'">'+esc(cname)+'</span>'+
+       '<span class="ndate">'+esc(n.date)+'</span>'+
+       '<span class="ntitle">'+esc(n.title)+'</span>'+
+       '</a>';
+  });
+  return h+'</div>';
+}
 function statsHTML(){
   var dp=days(new Date(2026,9,21));
   var vatt=VIDG.filter(function(g){ return !g.opt; });
@@ -1578,6 +1613,8 @@ function viewHome(){
      '<button class="navbtn" id="next" aria-label="다음 주">›</button>'+
      '<span class="wlabel" id="wlabel">—</span><span class="wrange" id="wrange"></span><span id="wtag"></span>'+
      '<button class="today-btn" id="todaybtn">오늘로</button></div><div id="tasklist" class="tasklist"></div></section>';
+  h+='<section><div class="shead"><h2><span class="idx">!</span>공지·특이사항</h2>'+
+     '<span class="hint">최근 30일 · Canvas 게시판 자동 수집</span></div>'+noticesHTML()+'</section>';
   h+='<section><div class="shead"><h2><span class="idx">7</span>과목 바로가기</h2>'+
      '<span class="hint">이번 주 학습 내용이 함께 표시됩니다</span></div><div class="cgrid">'+courseGridHTML()+'</div></section>';
   h+=videoSectionHTML(null);
@@ -1631,12 +1668,14 @@ function weekRowHTML(k,x,cw){
   var open=!!openWeeks[k+'.'+x.w];
   var dueThis=T.filter(function(t){ return t.c===k && t.w===x.w; });
   var wd=ST.wdone[k+'.'+x.w];
+  var vext=!!(C[k]&&C[k].vext&&!vidsOf(k,x.w).length);
   var h='<div class="wkrow'+(x.w===cw?' is-now':'')+(open?' open':'')+'" id="wk'+k+'-'+x.w+'">';
   h+='<button class="wkhead" data-wk="'+k+'.'+x.w+'" aria-expanded="'+(open?'true':'false')+'">';
   h+='<span class="car">▸</span>';
   h+='<span class="wn">'+x.w+'주</span>';
   h+='<span><span class="wt">'+esc(x.t)+'</span>'+(x.q?'<span class="wq">'+esc(x.q)+'</span>':'')+'</span>';
   h+='<span class="wr">'+(wd?'<span class="wkdone">학습 완료</span>':'')+
+     (vext?'<span class="kind" style="color:var(--calm)">영상</span>':'')+
      (x.tag?'<span class="kind">'+x.tag+'</span>':'')+
      (dueThis.length?'<span class="kind">제출 '+dueThis.length+'</span>':'')+
      '<span class="wdt">'+(x.range?esc(x.range):fmt2(weekStart(x.w))+'–'+fmt2(weekEnd(x.w)))+'</span></span>';
@@ -1644,7 +1683,7 @@ function weekRowHTML(k,x,cw){
   h+='<div class="wkbody">';
   h+='<ul class="pts">'+(x.pts||[]).map(function(p){ return '<li><span>'+p+'</span></li>'; }).join('')+'</ul>';
   h+=emphHTML(x);
-  h+=matHTML(k,x.w);
+  h+=matHTML(k,x.w,vext);
   if(dueThis.length){
     h+='<div class="matbox"><h4>이 주차 제출물</h4><div class="tasklist" style="margin-top:10px">'+
        taskListHTML(dueThis.slice().sort(function(a,b){return a.date-b.date}),[],false)+'</div></div>';
@@ -1668,9 +1707,12 @@ function emphHTML(x){
   return h+'</div>';
 }
 
-function matHTML(k,w){
+function matHTML(k,w,vext){
   var vids=vidsOf(k,w), files=filesOf(k,w), loc=(LOCAL[k]||{})[w]||[];
   var h='<div class="matbox"><h4>이 주차 강의자료</h4><div class="matlist">';
+  if(vext&&!vids.length){
+    h+='<span class="matlink local"><span class="ty">영상</span><span class="nm">LearningX에 영상 있음 — 주차학습 탭 확인</span></span>';
+  }
   var id=courseId(k);
   vids.forEach(function(g){
     var lang=g.items.map(function(v){ return v.l==='Kor'?'한국어':(v.l==='Eng'?'English':''); })
@@ -1723,6 +1765,7 @@ function xoverHTML(k,w){
 function nowCardHTML(k,w,cw){
   var x=weekOf(k,w), h='';
   var rel = (w===cw) ? ['cur','\uc774\ubc88 \uc8fc'] : (w<cw ? ['past','\uc9c0\ub09c \uc8fc\ucc28 \ubcf5\uc2b5'] : ['next','\ubbf8\ub9ac \ubcf4\uae30']);
+  var vext=!!(C[k]&&C[k].vext&&!vidsOf(k,w).length);
   h+='<div class="nowcard'+(w===cw?'':' off')+'">'+
      '<div class="tagrow"><span class="wnum">'+w+'\uc8fc\ucc28</span>'+
      '<span class="wdate">'+((x&&x.range)?esc(x.range):fmt2(weekStart(w))+' \u2013 '+fmt2(weekEnd(w)))+'</span>'+
@@ -1732,11 +1775,11 @@ function nowCardHTML(k,w,cw){
     h+='<h3>'+esc(x.t)+'</h3>'+
        (x.q?'<div class="qline"><b>\ud575\uc2ec \uc9c8\ubb38</b> \u2014 '+esc(x.q)+'</div>':'')+
        '<ul class="pts">'+(x.pts||[]).map(function(p){ return '<li><span>'+p+'</span></li>'; }).join('')+'</ul>'+
-       emphHTML(x)+matHTML(k,w)+xoverHTML(k,w);
+       emphHTML(x)+matHTML(k,w,vext)+xoverHTML(k,w);
   }else{
     h+='<h3>'+w+'\uc8fc\ucc28 \uacc4\ud68d \uc5c6\uc74c</h3>'+
        '<p class="aim">\uc774 \uacfc\ubaa9\uc758 \uc8fc\ucc28\ubcc4 \uacc4\ud68d\uc5d0 \ud574\ub2f9 \uc8fc\uac00 \uc5c6\uc2b5\ub2c8\ub2e4. \uc55e\ub4a4 \uc8fc\ucc28\ub97c \ud655\uc778\ud574 \ubcf4\uc138\uc694.</p>'+
-       matHTML(k,w);
+       matHTML(k,w,vext);
   }
   h+='</div>';
   var pv=stepWeek(k,w,-1), nx=stepWeek(k,w,1);
@@ -1791,20 +1834,22 @@ function viewCourse(k,jumpWeek){
      '<div id="nowwrap"></div></section>';
 
   /* 프로젝트 목표 */
-  h+='<section><div class="shead"><h2><span class="idx">GOAL</span>프로젝트 목표</h2>'+
-     '<span class="hint">배우면서 계속 채워 나갈 것</span></div>'+
-     '<div class="goal"><div class="gtop"><div><h3>'+esc(pr.t)+'</h3></div>'+
-     (pr.w!=='—'?'<div class="wgt">'+pr.w+'<small>비중</small></div>':'')+'</div>'+
-     '<p class="aim">'+pr.aim+'</p>'+
-     '<div class="gcols">'+
-     '<div class="gcol"><h4>산출물</h4><ul>'+(pr.out||[]).map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ul></div>'+
-     '<div class="gcol"><h4>지금 굴려볼 아이디어</h4><ul>'+(pr.idea||[]).map(function(s){return '<li>'+s+'</li>';}).join('')+'</ul></div>'+
-     '<div class="gcol"><h4>스스로 점검</h4><ul>'+(pr.ck||[]).map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ul></div>'+
-     '</div>'+
-     '<div class="memo"><label for="memo-'+k+'">내 아이디어 메모<span class="savemark" id="mk-'+k+'">저장됨</span></label>'+
-     '<textarea id="memo-'+k+'" placeholder="이번 주 배운 것 중 프로젝트에 쓸 수 있는 것, 떠오른 주제, 확인할 것…"></textarea>'+
-     '<div class="hint">입력하면 자동 저장됩니다.</div></div>'+
-     '</div></section>';
+  if(pr){
+    h+='<section><div class="shead"><h2><span class="idx">GOAL</span>프로젝트 목표</h2>'+
+       '<span class="hint">배우면서 계속 채워 나갈 것</span></div>'+
+       '<div class="goal"><div class="gtop"><div><h3>'+esc(pr.t)+'</h3></div>'+
+       (pr.w!=='—'?'<div class="wgt">'+pr.w+'<small>비중</small></div>':'')+'</div>'+
+       '<p class="aim">'+pr.aim+'</p>'+
+       '<div class="gcols">'+
+       '<div class="gcol"><h4>산출물</h4><ul>'+(pr.out||[]).map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ul></div>'+
+       '<div class="gcol"><h4>지금 굴려볼 아이디어</h4><ul>'+(pr.idea||[]).map(function(s){return '<li>'+s+'</li>';}).join('')+'</ul></div>'+
+       '<div class="gcol"><h4>스스로 점검</h4><ul>'+(pr.ck||[]).map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ul></div>'+
+       '</div>'+
+       '<div class="memo"><label for="memo-'+k+'">내 아이디어 메모<span class="savemark" id="mk-'+k+'">저장됨</span></label>'+
+       '<textarea id="memo-'+k+'" placeholder="이번 주 배운 것 중 프로젝트에 쓸 수 있는 것, 떠오른 주제, 확인할 것…"></textarea>'+
+       '<div class="hint">입력하면 자동 저장됩니다.</div></div>'+
+       '</div></section>';
+  }
 
   /* 주차별 학습 지도 */
   h+='<section><div class="shead"><h2><span class="idx">16W</span>주차별 학습 지도</h2>'+
